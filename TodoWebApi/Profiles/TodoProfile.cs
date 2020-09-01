@@ -13,6 +13,9 @@ namespace TodoWebApi.Profiles
         {
             CreateMap<Entities.Todo, Models.TodoDto>();
 
+            CreateMap<Models.TodoForCreationDto, Entities.Todo>();
+
+
             CreateMap<Models.TodoForUpdatimgDto, Entities.Todo>().ReverseMap();
             //CreateMap<Entities.PointOfInterest, Models.PointOfInterestForUpdatingDto>();
         }

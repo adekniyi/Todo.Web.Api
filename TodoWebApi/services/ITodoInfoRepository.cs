@@ -15,12 +15,12 @@ namespace TodoWebApi.services
 
         bool cityExist(int id);
 
-        void AddTodo(int id, Todo todo);
+        void AddTodo(Todo todo);
 
         bool save();
 
-        void UpdatePointOfInterest(int id, Todo todo);
+        void UpdateTodo(int id, Todo todo);
 
-        void DeletePointOfInterest(Todo todo);
+        void DeleteTodo(Todo todo);
     }
 }

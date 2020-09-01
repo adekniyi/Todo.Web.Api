@@ -76,22 +76,37 @@ namespace TodoWebApi.Controllers
             //    return NotFound();
             //}
 
-            var maxId = TodoDataStore.Current.Todos.Max(c => c.id);
+            //var maxId = TodoDataStore.Current.Todos.Max(c => c.id);
 
-            var finalResult = new TodoDto()
-            {
+            //var finalResult = new TodoDto()
+            //{
 
-                id = ++maxId,
-                todo = todo.todo,
-                isCompleted = todo.isCompleted
+            //    id = ++maxId,
+            //    todo = todo.todo,
+            //    isCompleted = todo.isCompleted
 
-            };
+            //};
 
 
-            TodoDataStore.Current.Todos.Add(finalResult);
+            //TodoDataStore.Current.Todos.Add(finalResult);
+
+            //return CreatedAtRoute("GetTodo",
+            //   new { id = finalResult.id }, finalResult);
+
+
+
+
+            var finalResult = _mapper.Map<Entities.Todo>(todo);
+
+            _todoInfoRepository.AddTodo(finalResult);
+
+            _todoInfoRepository.save();
+
+            var createdPointOfInterestToReturn = _mapper.Map<TodoDto>(finalResult);
+
 
             return CreatedAtRoute("GetTodo",
-               new { id = finalResult.id }, finalResult);
+                new { id = createdPointOfInterestToReturn.id }, createdPointOfInterestToReturn);
         }
 
         [HttpPut("{id}")]
@@ -99,7 +114,22 @@ namespace TodoWebApi.Controllers
         public IActionResult UpdateTodo(int id , TodoForUpdatimgDto todo)
         {
 
-            var TodoResult = TodoDataStore.Current.Todos.FirstOrDefault(t => t.id == id);
+            //var TodoResult = TodoDataStore.Current.Todos.FirstOrDefault(t => t.id == id);
+
+            //if (TodoResult == null)
+            //{
+            //    return NotFound();
+            //}
+
+
+            //TodoResult.todo = todo.todo;
+            //TodoResult.isCompleted = todo.isCompleted;
+
+
+            //return NoContent();
+
+
+            var TodoResult = _todoInfoRepository.GetTodo(id);
 
             if (TodoResult == null)
             {
@@ -107,9 +137,13 @@ namespace TodoWebApi.Controllers
             }
 
 
-            TodoResult.todo = todo.todo;
-            TodoResult.isCompleted = todo.isCompleted;
 
+            _mapper.Map(todo, TodoResult);
+
+
+            _todoInfoRepository.UpdateTodo(id,TodoResult);
+
+            _todoInfoRepository.save();
 
             return NoContent();
 
@@ -120,7 +154,15 @@ namespace TodoWebApi.Controllers
         public IActionResult DeleteTodo(int id)
         {
 
-            var TodoResult = TodoDataStore.Current.Todos.FirstOrDefault(t => t.id == id);
+            //var TodoResult = TodoDataStore.Current.Todos.FirstOrDefault(t => t.id == id);
+
+            //if (TodoResult == null)
+            //{
+            //    return NotFound();
+            //}
+
+
+            var TodoResult = _todoInfoRepository.GetTodo(id);
 
             if (TodoResult == null)
             {
@@ -128,7 +170,14 @@ namespace TodoWebApi.Controllers
             }
 
 
-            TodoDataStore.Current.Todos.Remove(TodoResult);
+            //TodoDataStore.Current.Todos.Remove(TodoResult);
+
+            //return NoContent();
+
+
+            _todoInfoRepository.DeleteTodo(TodoResult);
+
+            _todoInfoRepository.save();
 
             return NoContent();
         }

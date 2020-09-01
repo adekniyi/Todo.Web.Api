@@ -17,11 +17,9 @@ namespace TodoWebApi.services
             _context = context ?? throw new ArgumentNullException(nameof(context));
 
         }
-        public void AddTodo(int id, Todo todo)
+        public void AddTodo(Todo todo)
         {
-            var newTodo = GetTodo(id);
-
-            _context.Todos.Add(newTodo);
+            _context.Todos.Add(todo);
         }
 
         public bool cityExist(int id)
@@ -29,7 +27,7 @@ namespace TodoWebApi.services
             return _context.Todos.Any(c => c.id == id); 
         }
 
-        public void DeletePointOfInterest(Todo todo)
+        public void DeleteTodo(Todo todo)
         {
             _context.Remove(todo);
         }
@@ -49,7 +47,7 @@ namespace TodoWebApi.services
             return (_context.SaveChanges() >= 0);
         }
 
-        public void UpdatePointOfInterest(int cityid, Todo todo)
+        public void UpdateTodo(int cityid, Todo todo)
         {
             
         }

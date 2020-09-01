@@ -16,7 +16,7 @@ namespace TodoWebApi.Context
         {
 
 
-            //Database.EnsureCreated();
+            Database.EnsureCreated();
 
         }
 
